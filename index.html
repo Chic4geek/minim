@@ -1,0 +1,1669 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Minimalismo Consciente</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  	<!-- Aquí va el link del manifest -->
+    <link rel="manifest" href="/manifest.json">
+	<!-- Iconos para iOS y otros navegadores -->
+    <link rel="icon" type="image/png" sizes="192x192" href="/icono-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/icono-512.png">
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background: #f6f6f6;
+      margin: 0;
+      padding: 16px;
+      color: #222;
+    }
+    h1, h2 {
+      margin-top: 0;
+    }
+    .card {
+      background: white;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 8px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      background: #222;
+      color: white;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #000;
+    }
+    button.secondary {
+      background: #ddd;
+      color: #222;
+    }
+    button.secondary:hover {
+      background: #ccc;
+    }
+    button.history, button.calendar {
+      background: #4a6fa5;
+      width: auto;
+      padding: 8px 16px;
+      margin: 8px 4px 8px 0;
+      display: inline-block;
+    }
+    button.edit, button.delete, button.convert {
+      width: auto;
+      padding: 6px 12px;
+      margin: 4px 4px 4px 0;
+      font-size: 14px;
+    }
+    button.edit {
+      background: #3498db;
+    }
+    button.edit:hover {
+      background: #2980b9;
+    }
+    button.delete {
+      background: #e74c3c;
+    }
+    button.delete:hover {
+      background: #c0392b;
+    }
+    button.convert {
+      background: #9b59b6;
+    }
+    button.convert:hover {
+      background: #8e44ad;
+    }
+    button.nav-calendar {
+      background: #7f8c8d;
+      width: auto;
+      padding: 8px 16px;
+      margin: 4px;
+    }
+    button.nav-calendar:hover {
+      background: #95a5a6;
+    }
+    button.postpone {
+      background: #f39c12;
+    }
+    button.postpone:hover {
+      background: #e67e22;
+    }
+    select, input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 6px;
+      margin-bottom: 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    input[type="date"] {
+      font-family: system-ui, sans-serif;
+    }
+    .hidden {
+      display: none !important;
+    }
+    .history-item {
+      background: #f9f9f9;
+      border-left: 4px solid #4a6fa5;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 0 4px 4px 0;
+      position: relative;
+    }
+    .history-item.compra {
+      border-left-color: #e74c3c;
+    }
+    .history-item.fuera {
+      border-left-color: #2ecc71;
+    }
+    .history-item.postpone {
+      border-left-color: #f39c12;
+      background: #fff8e1;
+    }
+    .history-header {
+      display: flex;
+      justify-content: space-between;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+    .history-object {
+      font-size: 1.1em;
+      color: #222;
+      margin-bottom: 2px;
+    }
+    .history-details {
+      font-size: 0.9em;
+      color: #555;
+    }
+    .history-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 8px;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .stats-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .stat-box {
+      background: #f0f0f0;
+      padding: 12px;
+      border-radius: 6px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-box:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      background: #e8e8e8;
+    }
+    .stat-box::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: #222;
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+    .stat-box:hover::after {
+      transform: scaleX(1);
+    }
+    .stat-value {
+      font-size: 24px;
+      font-weight: bold;
+      color: #222;
+    }
+    .stat-label {
+      font-size: 14px;
+      color: #666;
+      margin-top: 4px;
+    }
+    .stat-box.positive {
+      background: #e8f5e9;
+      border-left: 4px solid #2ecc71;
+    }
+    .stat-box.positive:hover {
+      background: #d4edda;
+    }
+    .stat-box.positive::after {
+      background: #2ecc71;
+    }
+    .stat-box.neutral {
+      background: #e3f2fd;
+      border-left: 4px solid #3498db;
+    }
+    .stat-box.neutral:hover {
+      background: #bbdefb;
+    }
+    .stat-box.neutral::after {
+      background: #3498db;
+    }
+    .stat-box.warning {
+      background: #fff3e0;
+      border-left: 4px solid #f39c12;
+    }
+    .stat-box.warning:hover {
+      background: #ffe0b2;
+    }
+    .stat-box.warning::after {
+      background: #f39c12;
+    }
+    .stat-box.critical {
+      background: #ffebee;
+      border-left: 4px solid #e74c3c;
+    }
+    .stat-box.critical:hover {
+      background: #ffcdd2;
+    }
+    .stat-box.critical::after {
+      background: #e74c3c;
+    }
+    .stat-box.postpone {
+      background: #fef3e2;
+      border-left: 4px solid #f39c12;
+    }
+    .stat-box.postpone:hover {
+      background: #fdd57e;
+    }
+    .stat-box.postpone::after {
+      background: #f39c12;
+    }
+    .no-entries {
+      text-align: center;
+      color: #888;
+      padding: 16px;
+      font-style: italic;
+    }
+    .tabs {
+      display: flex;
+      margin-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    .tab {
+      padding: 10px 16px;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+    }
+    .tab.active {
+      border-bottom: 3px solid #4a6fa5;
+      font-weight: bold;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .modal {
+      background: white;
+      border-radius: 8px;
+      padding: 24px;
+      max-width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal h3 {
+      margin-top: 0;
+    }
+    .modal-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .modal-buttons button {
+      flex: 1;
+      width: auto;
+    }
+    
+    /* Estilos para el calendario */
+    .calendar-container {
+      margin: 20px 0;
+    }
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding: 12px;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+    .calendar-title {
+      font-size: 20px;
+      font-weight: bold;
+      color: #222;
+    }
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+    .calendar-day-header {
+      text-align: center;
+      font-weight: bold;
+      padding: 8px;
+      background: #4a6fa5;
+      color: white;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    .calendar-day {
+      aspect-ratio: 1;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      padding: 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: white;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .calendar-day:hover {
+      background: #f5f5f5;
+      transform: scale(1.05);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      z-index: 10;
+    }
+    .calendar-day.today {
+      border: 2px solid #4a6fa5;
+      background: #e3f2fd;
+    }
+    .calendar-day.other-month {
+      background: #f8f9fa;
+      color: #aaa;
+    }
+    .calendar-day-number {
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+    .calendar-day.empty {
+      background: transparent;
+      border: none;
+      cursor: default;
+    }
+    .calendar-day.empty:hover {
+      background: transparent;
+      transform: none;
+      box-shadow: none;
+    }
+    .day-stats {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      font-size: 10px;
+    }
+    .stat-badge {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: bold;
+      color: white;
+    }
+    .stat-badge.compra {
+      background: #e74c3c;
+    }
+    .stat-badge.evitada {
+      background: #3498db;
+    }
+    .stat-badge.fuera {
+      background: #2ecc71;
+    }
+    .stat-badge.postpone {
+      background: #f39c12;
+    }
+    .day-tooltip {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.8);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.2s;
+      margin-bottom: 8px;
+      pointer-events: none;
+    }
+    .calendar-day:hover .day-tooltip {
+      opacity: 1;
+    }
+    .calendar-nav {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin: 16px 0;
+    }
+    .month-selector {
+      margin: 0 16px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .form-group {
+      margin-bottom: 12px;
+    }
+    .form-label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 4px;
+      color: #444;
+    }
+    .convert-options {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      border: 2px solid #ddd;
+    }
+    .convert-option {
+      flex: 1;
+      text-align: center;
+      padding: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .convert-option:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .convert-option.evitada {
+      background: #e3f2fd;
+      border: 2px solid #3498db;
+    }
+    .convert-option.compra {
+      background: #ffebee;
+      border: 2px solid #e74c3c;
+    }
+    .convert-option h4 {
+      margin: 0 0 8px 0;
+      font-size: 16px;
+    }
+    .convert-option p {
+      margin: 0;
+      font-size: 14px;
+      color: #666;
+    }
+    @media (max-width: 600px) {
+      .stats-container {
+        grid-template-columns: 1fr 1fr;
+      }
+      .history-actions {
+        flex-direction: column;
+      }
+      .modal-buttons {
+        flex-direction: column;
+      }
+      .calendar-grid {
+        gap: 2px;
+      }
+      .stat-badge {
+        width: 16px;
+        height: 16px;
+        font-size: 9px;
+      }
+      button.history, button.calendar {
+        display: block;
+        width: 100%;
+        margin: 4px 0;
+      }
+      .calendar-nav {
+        flex-direction: column;
+      }
+      .month-selector {
+        margin: 8px 0;
+      }
+      .convert-options {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<h1><center> Minimalismo 🪶</center></h1>
+
+<div class="card" id="dashboard">
+  <div class="stats-container">
+    <div class="stat-box warning" onclick="irAListado('evitadas')">
+      <div class="stat-value" id="diasSinComprar">0</div>
+      <div class="stat-label">Días sin comprar</div>
+    </div>
+    <div class="stat-box positive" onclick="irAListado('fuera')">
+      <div class="stat-value" id="diasDonando">0</div>
+      <div class="stat-label">Días donando objetos</div>
+    </div>
+    <div class="stat-box neutral" onclick="irAListado('evitadas')">
+      <div class="stat-value" id="totalEvitadas">0</div>
+      <div class="stat-label">Compras evitadas</div>
+    </div>
+    <div class="stat-box critical" onclick="irAListado('compras')">
+      <div class="stat-value" id="totalCompras">0</div>
+      <div class="stat-label">Compras realizadas</div>
+    </div>
+    <div class="stat-box" onclick="irAListado('fuera')">
+      <div class="stat-value" id="totalFuera">0</div>
+      <div class="stat-label">Objetos fuera</div>
+    </div>
+    <div class="stat-box postpone" onclick="irAListado('postpone')">
+      <div class="stat-value" id="totalPostpone">0</div>
+      <div class="stat-label">Compras pospuestas</div>
+    </div>
+  </div>
+
+  <button onclick="mostrar('evitada')">✋ Evité una compra</button>
+  <button onclick="mostrar('compra')">🛍️ He comprado algo</button>
+  <button onclick="mostrar('fuera')">➖ Objeto fuera</button>
+  <button class="postpone" onclick="mostrar('postpone')">⏳ Compra pospuesta</button>
+  <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px;">
+    <button class="history" onclick="mostrarHistorial()">📊 Ver historial completo</button>
+    <button class="calendar" onclick="mostrarCalendario()">📅 Ver calendario</button>
+  </div>
+</div>
+
+<!-- Formulario de compra pospuesta -->
+<div class="card hidden" id="form-postpone">
+  <h2>⏳ Compra pospuesta</h2>
+  <div class="form-group">
+    <label class="form-label" for="postponeObjeto">¿Qué quieres comprar?</label>
+    <input id="postponeObjeto" type="text" placeholder="ej: jersey de lana, libro de cocina...">
+  </div>
+  <div class="form-group">
+    <label class="form-label" for="postponeCategoria">Categoría:</label>
+    <select id="postponeCategoria">
+      <option>Ropa</option><option>Libros</option><option>Decoración</option><option>Tech</option><option>Hogar</option><option>Alimentación</option><option>Belleza</option><option>Deporte</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label class="form-label" for="postponeMotivo">Motivo de la compra:</label>
+    <select id="postponeMotivo">
+      <option>Necesidad real</option><option>Capricho</option><option>Oferta</option><option>Lo necesitaré</option><option>Aburrimiento</option><option>Impulso</option><option>Presión social</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label class="form-label" for="postponeEmocion">Emoción actual:</label>
+    <select id="postponeEmocion">
+      <option>Neutro</option><option>Ansiedad</option><option>Ilusión</option><option>Estrés</option><option>Felicidad</option><option>Tristeza</option><option>Impaciencia</option><option>Excitación</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label class="form-label" for="postponeNotas">Notas adicionales:</label>
+    <textarea id="postponeNotas" placeholder="¿Por qué lo pospones? ¿Cuándo lo reconsiderarás?" style="width:100%; height:80px; padding:8px; border:1px solid #ddd; border-radius:4px;"></textarea>
+  </div>
+  <button onclick="guardarPostpone()">Guardar compra pospuesta</button>
+  <button class="secondary" onclick="volver()">Cancelar</button>
+</div>
+
+<div class="card hidden" id="form-evitada">
+  <h2>Compra evitada</h2>
+  <div class="form-group">
+    <label class="form-label" for="evitadaFecha">Fecha:</label>
+    <input id="evitadaFecha" type="date">
+  </div>
+  <div class="form-group">
+    <label class="form-label" for="evitadaObjeto">¿Qué querías comprar?</label>
+    <input id="evitadaObjeto" type="text" placeholder="ej: jersey de lana, libro de cocina...">
+  </div>
+  <div class="form-group">
+    <label class="form-label" for="evitadaCategoria">Categoría:</label>
+    <select id="evitadaCategoria">
+      <option>Ropa</option><option>Libros</option><option>Decoración</option><option>Tech</option><option>Hogar</option><option>Alimentación</option><option>Belleza</option><option>Deporte</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label class="form-label" for="evitadaMotivo">Motivo:</label>
+    <select id="evitadaMotivo">
+      <option>Oferta</option><option>Capricho</option><option>Lo necesitaré</option><option>Aburrimiento</option><option>Impulso</option><option>Presión social</option><option>Ansiedad</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label class="form-label" for="evitadaEmocion">Emoción:</label>
+    <select id="evitadaEmocion">
+      <option>Neutro</option><option>Ansiedad</option><option>Ilusión</option><option>Estrés</option><option>Felicidad</option><option>Tristeza</option><option>Culpa</option><option>Satisfacción</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label class="form-label" for="evitadaNotas">Notas adicionales:</label>
+    <textarea id="evitadaNotas" placeholder="Opcional" style="width:100%; height:60px; padding:8px; border:1px solid #ddd; border-radius:4px;"></textarea>
+  </div>
+  <button onclick="guardarEvitada()">Guardar</button>
+  <button class="secondary" onclick="volver()">Cancelar</button>
+</div>
+
+<div class="card hidden" id="form-compra">
+  <h2>Compra realizada</h2>
+  <div class="form-group">
+    <label class="form-label" for="compraFecha">Fecha:</label>
+    <input id="compraFecha" type="date">
+  </div>
+  <div class="form-group">
+    <label class="form-label" for="compraObjeto">¿Qué has comprado?</label>
+    <input id="compraObjeto" type="text" placeholder="ej: zapatillas deportivas, café...">
+  </div>
+  <div class="form-group">
+    <label class="form-label" for="compraCategoria">Categoría:</label>
+    <select id="compraCategoria">
+      <option>Ropa</option><option>Libros</option><option>Decoración</option><option>Tech</option><option>Hogar</option><option>Alimentación</option><option>Belleza</option><option>Deporte</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label class="form-label" for="compraPrecio">Precio aproximado:</label>
+    <input id="compraPrecio" type="number" placeholder="0.00" min="0" step="0.01">
+  </div>
+  <div class="form-group">
+    <label class="form-label" for="compraNecesario">¿Era necesario?</label>
+    <select id="compraNecesario">
+      <option>Sí</option><option>Dudoso</option><option>No</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label class="form-label" for="compraNotas">Notas adicionales:</label>
+    <textarea id="compraNotas" placeholder="Opcional" style="width:100%; height:60px; padding:8px; border:1px solid #ddd; border-radius:4px;"></textarea>
+  </div>
+  <button onclick="guardarCompra()">Guardar</button>
+  <button class="secondary" onclick="volver()">Cancelar</button>
+</div>
+
+<div class="card hidden" id="form-fuera">
+  <h2>Objeto fuera</h2>
+  <div class="form-group">
+    <label class="form-label" for="fueraFecha">Fecha:</label>
+    <input id="fueraFecha" type="date">
+  </div>
+  <div class="form-group">
+    <label class="form-label" for="fueraObjeto">¿Qué objeto has sacado?</label>
+    <input id="fueraObjeto" type="text" placeholder="ej: camiseta vieja, libro...">
+  </div>
+  <div class="form-group">
+    <label class="form-label" for="fueraCategoria">Categoría:</label>
+    <select id="fueraCategoria">
+      <option>Ropa</option><option>Libros</option><option>Decoración</option><option>Otros</option><option>Tech</option><option>Hogar</option><option>Juguetes</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label class="form-label" for="fueraTipo">Tipo de salida:</label>
+    <select id="fueraTipo">
+      <option>Donar</option><option>Vender</option><option>Tirar</option><option>Reciclar</option><option>Regalar</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label class="form-label" for="fueraNotas">Notas adicionales:</label>
+    <textarea id="fueraNotas" placeholder="Opcional" style="width:100%; height:60px; padding:8px; border:1px solid #ddd; border-radius:4px;"></textarea>
+  </div>
+  <button onclick="guardarFuera()">Guardar</button>
+  <button class="secondary" onclick="volver()">Cancelar</button>
+</div>
+
+<div class="card hidden" id="historial">
+  <h2>📊 Historial de actividades</h2>
+  
+  <div class="tabs">
+    <div class="tab active" data-tab="evitadas">Compras evitadas</div>
+    <div class="tab" data-tab="compras">Compras realizadas</div>
+    <div class="tab" data-tab="fuera">Objetos fuera</div>
+    <div class="tab" data-tab="postpone">Compras pospuestas</div>
+  </div>
+  
+  <div id="tab-evitadas" class="tab-content active">
+    <h3>Compras evitadas</h3>
+    <div id="lista-evitadas">
+      <!-- Lista generada dinámicamente -->
+    </div>
+  </div>
+  
+  <div id="tab-compras" class="tab-content">
+    <h3>Compras realizadas</h3>
+    <div id="lista-compras">
+      <!-- Lista generada dinámicamente -->
+    </div>
+  </div>
+  
+  <div id="tab-fuera" class="tab-content">
+    <h3>Objetos fuera</h3>
+    <div id="lista-fuera">
+      <!-- Lista generada dinámicamente -->
+    </div>
+  </div>
+  
+  <div id="tab-postpone" class="tab-content">
+    <h3>⏳ Compras pospuestas</h3>
+    <div id="lista-postpone">
+      <!-- Lista generada dinámicamente -->
+    </div>
+  </div>
+  
+  <button class="secondary" onclick="volver()">Volver al inicio</button>
+</div>
+
+<!-- Nueva página del calendario -->
+<div class="card hidden" id="calendario">
+  <h2>📅 Calendario de Actividades</h2>
+  
+  <div class="calendar-nav">
+    <button class="nav-calendar" onclick="cambiarMes(-1)">◀ Mes anterior</button>
+    <span class="month-selector" id="mesActual">Enero 2024</span>
+    <button class="nav-calendar" onclick="cambiarMes(1)">Mes siguiente ▶</button>
+  </div>
+  
+  <div class="calendar-container">
+    <div class="calendar-grid" id="calendarioGrid">
+      <!-- Días de la semana -->
+      <div class="calendar-day-header">Lun</div>
+      <div class="calendar-day-header">Mar</div>
+      <div class="calendar-day-header">Mié</div>
+      <div class="calendar-day-header">Jue</div>
+      <div class="calendar-day-header">Vie</div>
+      <div class="calendar-day-header">Sáb</div>
+      <div class="calendar-day-header">Dom</div>
+      <!-- Días del mes se generan dinámicamente -->
+    </div>
+  </div>
+  
+  <div style="margin-top: 20px; padding: 16px; background: #f8f9fa; border-radius: 8px;">
+    <h3>Leyenda:</h3>
+    <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 10px;">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <div class="stat-badge compra">C</div>
+        <span>Compras realizadas</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <div class="stat-badge evitada">E</div>
+        <span>Compras evitadas</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <div class="stat-badge fuera">D</div>
+        <span>Objetos donados</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <div class="stat-badge postpone">P</div>
+        <span>Compras pospuestas</span>
+      </div>
+    </div>
+  </div>
+  
+  <button class="secondary" onclick="volver()">Volver al inicio</button>
+</div>
+
+<!-- Modal para convertir compra pospuesta -->
+<div id="modalConvertir" class="modal-overlay hidden">
+  <div class="modal">
+    <h3>🔄 Convertir compra pospuesta</h3>
+    <p id="mensajeConvertir">¿Qué quieres hacer con esta compra pospuesta?</p>
+    
+    <div class="convert-options">
+      <div class="convert-option evitada" onclick="convertirAEvitada()">
+        <h4>✋ Evitar compra</h4>
+        <p>Decidí no comprarlo</p>
+      </div>
+      <div class="convert-option compra" onclick="convertirACompra()">
+        <h4>🛍️ Comprar</h4>
+        <p>Finalmente lo compré</p>
+      </div>
+    </div>
+    
+    <div class="modal-buttons">
+      <button class="secondary" onclick="cerrarModalConvertir()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de confirmación para eliminar - OCULTO POR DEFECTO -->
+<div id="modalEliminar" class="modal-overlay hidden">
+  <div class="modal" id="modalContent">
+    <h3>⚠️ Confirmar eliminación</h3>
+    <p id="mensajeEliminar">¿Estás seguro de que quieres eliminar este registro? Esta acción no se puede deshacer.</p>
+    <div class="modal-buttons">
+      <button onclick="confirmarEliminar()">Eliminar</button>
+      <button class="secondary" onclick="cerrarModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Variables globales
+  let itemParaEliminar = null;
+  let tipoItemEliminar = null;
+  let itemParaEditar = null;
+  let tipoItemEditar = null;
+  let itemParaConvertir = null;
+  let fechaCalendarioActual = new Date(); // Mes actual del calendario
+
+  // Cargar datos del localStorage o inicializar estructura
+  const data = JSON.parse(localStorage.getItem('minimalismo')) || {
+    evitadas: [],
+    compras: [],
+    fuera: [],
+    postpone: [], // Nueva lista para compras pospuestas
+    ultimaCompra: null,
+    ultimaFuera: null
+  };
+
+  // Función para formatear fecha a YYYY-MM-DD
+  function formatearFechaParaInput(fecha) {
+    const d = new Date(fecha);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  // Función para guardar datos en localStorage y actualizar dashboard
+  function guardar() {
+    localStorage.setItem('minimalismo', JSON.stringify(data));
+    actualizarDashboard();
+    volver();
+  }
+
+  // Mostrar un formulario específico
+  function mostrar(tipo) {
+    document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
+    document.getElementById('form-' + tipo).classList.remove('hidden');
+    
+    // Establecer fecha actual en los campos de fecha (excepto postpone)
+    const hoy = new Date();
+    const fechaFormateada = formatearFechaParaInput(hoy);
+    
+    if (tipo === 'evitada') {
+      document.getElementById('evitadaFecha').value = fechaFormateada;
+    } else if (tipo === 'compra') {
+      document.getElementById('compraFecha').value = fechaFormateada;
+    } else if (tipo === 'fuera') {
+      document.getElementById('fueraFecha').value = fechaFormateada;
+    }
+    
+    // Limpiar campos del formulario si no estamos editando
+    if (!itemParaEditar) {
+      limpiarFormulario(tipo);
+    }
+  }
+
+  // Limpiar campos del formulario
+  function limpiarFormulario(tipo) {
+    if (tipo === 'evitada') {
+      document.getElementById('evitadaObjeto').value = '';
+      document.getElementById('evitadaCategoria').value = 'Ropa';
+      document.getElementById('evitadaMotivo').value = 'Capricho';
+      document.getElementById('evitadaEmocion').value = 'Neutro';
+      document.getElementById('evitadaNotas').value = '';
+    } else if (tipo === 'compra') {
+      document.getElementById('compraObjeto').value = '';
+      document.getElementById('compraCategoria').value = 'Ropa';
+      document.getElementById('compraPrecio').value = '';
+      document.getElementById('compraNecesario').value = 'Sí';
+      document.getElementById('compraNotas').value = '';
+    } else if (tipo === 'fuera') {
+      document.getElementById('fueraObjeto').value = '';
+      document.getElementById('fueraCategoria').value = 'Ropa';
+      document.getElementById('fueraTipo').value = 'Donar';
+      document.getElementById('fueraNotas').value = '';
+    } else if (tipo === 'postpone') {
+      document.getElementById('postponeObjeto').value = '';
+      document.getElementById('postponeCategoria').value = 'Ropa';
+      document.getElementById('postponeMotivo').value = 'Necesidad real';
+      document.getElementById('postponeEmocion').value = 'Neutro';
+      document.getElementById('postponeNotas').value = '';
+    }
+  }
+
+  // Volver al dashboard
+  function volver() {
+    document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
+    document.getElementById('dashboard').classList.remove('hidden');
+    actualizarDashboard();
+    
+    // Resetear variables de edición
+    itemParaEditar = null;
+    tipoItemEditar = null;
+    itemParaConvertir = null;
+  }
+
+  // Ir directamente al listado específico desde el dashboard
+  function irAListado(tipo) {
+    mostrarHistorial();
+    cambiarTab(tipo);
+  }
+
+  // Guardar una compra pospuesta
+  function guardarPostpone() {
+    const objeto = document.getElementById('postponeObjeto').value.trim();
+    if (!objeto) {
+      alert('Por favor, indica qué objeto quieres comprar');
+      return;
+    }
+    
+    const nuevaPostpone = {
+      id: Date.now(),
+      fechaCreacion: new Date(),
+      objeto: objeto,
+      categoria: document.getElementById('postponeCategoria').value,
+      motivo: document.getElementById('postponeMotivo').value,
+      emocion: document.getElementById('postponeEmocion').value,
+      notas: document.getElementById('postponeNotas').value.trim()
+    };
+    
+    data.postpone.push(nuevaPostpone);
+    guardar();
+  }
+
+  // Guardar una compra evitada con todos sus detalles
+  function guardarEvitada() {
+    const objeto = document.getElementById('evitadaObjeto').value.trim();
+    if (!objeto) {
+      alert('Por favor, indica qué objeto querías comprar');
+      return;
+    }
+    
+    const fechaInput = document.getElementById('evitadaFecha').value;
+    if (!fechaInput) {
+      alert('Por favor, selecciona una fecha');
+      return;
+    }
+    
+    const fecha = new Date(fechaInput + 'T12:00:00'); // Usar mediodía para evitar problemas de zona horaria
+    
+    if (itemParaEditar !== null && tipoItemEditar === 'evitada') {
+      // Modo edición
+      const index = data.evitadas.findIndex(e => e.id === itemParaEditar);
+      if (index !== -1) {
+        data.evitadas[index] = {
+          id: itemParaEditar,
+          fecha: fecha,
+          objeto: objeto,
+          categoria: document.getElementById('evitadaCategoria').value,
+          motivo: document.getElementById('evitadaMotivo').value,
+          emocion: document.getElementById('evitadaEmocion').value,
+          notas: document.getElementById('evitadaNotas').value.trim()
+        };
+        itemParaEditar = null;
+        tipoItemEditar = null;
+        guardar();
+        return;
+      }
+    }
+    
+    // Modo creación nueva
+    const nuevaEvitada = {
+      id: Date.now(),
+      fecha: fecha,
+      objeto: objeto,
+      categoria: document.getElementById('evitadaCategoria').value,
+      motivo: document.getElementById('evitadaMotivo').value,
+      emocion: document.getElementById('evitadaEmocion').value,
+      notas: document.getElementById('evitadaNotas').value.trim()
+    };
+    
+    data.evitadas.push(nuevaEvitada);
+    guardar();
+  }
+
+  // Guardar una compra realizada con todos sus detalles
+  function guardarCompra() {
+    const objeto = document.getElementById('compraObjeto').value.trim();
+    if (!objeto) {
+      alert('Por favor, indica qué objeto has comprado');
+      return;
+    }
+    
+    const fechaInput = document.getElementById('compraFecha').value;
+    if (!fechaInput) {
+      alert('Por favor, selecciona una fecha');
+      return;
+    }
+    
+    const fecha = new Date(fechaInput + 'T12:00:00'); // Usar mediodía para evitar problemas de zona horaria
+    
+    if (itemParaEditar !== null && tipoItemEditar === 'compra') {
+      // Modo edición
+      const index = data.compras.findIndex(c => c.id === itemParaEditar);
+      if (index !== -1) {
+        const fechaOriginal = data.compras[index].fecha;
+        data.compras[index] = {
+          id: itemParaEditar,
+          fecha: fecha,
+          objeto: objeto,
+          categoria: document.getElementById('compraCategoria').value,
+          precio: document.getElementById('compraPrecio').value || '0',
+          necesario: document.getElementById('compraNecesario').value,
+          notas: document.getElementById('compraNotas').value.trim()
+        };
+        
+        // Si es la compra más reciente, actualizar ultimaCompra
+        const ultima = data.compras.reduce((max, item) => 
+          new Date(item.fecha) > new Date(max.fecha) ? item : max
+        );
+        data.ultimaCompra = ultima.fecha;
+        
+        itemParaEditar = null;
+        tipoItemEditar = null;
+        guardar();
+        return;
+      }
+    }
+    
+    // Modo creación nueva
+    const nuevaCompra = {
+      id: Date.now(),
+      fecha: fecha,
+      objeto: objeto,
+      categoria: document.getElementById('compraCategoria').value,
+      precio: document.getElementById('compraPrecio').value || '0',
+      necesario: document.getElementById('compraNecesario').value,
+      notas: document.getElementById('compraNotas').value.trim()
+    };
+    
+    data.compras.push(nuevaCompra);
+    
+    // Actualizar última compra si esta es más reciente
+    if (!data.ultimaCompra || fecha > new Date(data.ultimaCompra)) {
+      data.ultimaCompra = fecha;
+    }
+    
+    guardar();
+  }
+
+  // Guardar un objeto fuera con todos sus detalles
+  function guardarFuera() {
+    const objeto = document.getElementById('fueraObjeto').value.trim();
+    if (!objeto) {
+      alert('Por favor, indica qué objeto has sacado');
+      return;
+    }
+    
+    const fechaInput = document.getElementById('fueraFecha').value;
+    if (!fechaInput) {
+      alert('Por favor, selecciona una fecha');
+      return;
+    }
+    
+    const fecha = new Date(fechaInput + 'T12:00:00'); // Usar mediodía para evitar problemas de zona horaria
+    
+    if (itemParaEditar !== null && tipoItemEditar === 'fuera') {
+      // Modo edición
+      const index = data.fuera.findIndex(f => f.id === itemParaEditar);
+      if (index !== -1) {
+        data.fuera[index] = {
+          id: itemParaEditar,
+          fecha: fecha,
+          objeto: objeto,
+          categoria: document.getElementById('fueraCategoria').value,
+          tipo: document.getElementById('fueraTipo').value,
+          notas: document.getElementById('fueraNotas').value.trim()
+        };
+        itemParaEditar = null;
+        tipoItemEditar = null;
+        guardar();
+        return;
+      }
+    }
+    
+    // Modo creación nueva
+    const nuevoFuera = {
+      id: Date.now(),
+      fecha: fecha,
+      objeto: objeto,
+      categoria: document.getElementById('fueraCategoria').value,
+      tipo: document.getElementById('fueraTipo').value,
+      notas: document.getElementById('fueraNotas').value.trim()
+    };
+    
+    data.fuera.push(nuevoFuera);
+    
+    // Actualizar última donación si esta es más reciente
+    if (!data.ultimaFuera || fecha > new Date(data.ultimaFuera)) {
+      data.ultimaFuera = fecha;
+    }
+    
+    guardar();
+  }
+
+  // Calcular los días seguidos donando objetos
+  function calcularDiasDonando() {
+    if (!data.ultimaFuera) {
+      return 0;
+    }
+    
+    const hoy = new Date();
+    hoy.setHours(0, 0, 0, 0);
+    
+    const ultimaFecha = new Date(data.ultimaFuera);
+    ultimaFecha.setHours(0, 0, 0, 0);
+    
+    const diffTime = hoy - ultimaFecha;
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    
+    return diffDays <= 1 ? (diffDays === 0 ? 1 : diffDays + 1) : 0;
+  }
+
+  // Actualizar los números del dashboard
+  function actualizarDashboard() {
+    document.getElementById('totalEvitadas').textContent = data.evitadas.length;
+    document.getElementById('totalCompras').textContent = data.compras.length;
+    document.getElementById('totalFuera').textContent = data.fuera.length;
+    document.getElementById('totalPostpone').textContent = data.postpone.length;
+    document.getElementById('diasDonando').textContent = calcularDiasDonando();
+
+    if (!data.ultimaCompra) {
+      document.getElementById('diasSinComprar').textContent = data.evitadas.length > 0 ? '∞' : 0;
+    } else {
+      const dias = Math.floor((new Date() - new Date(data.ultimaCompra)) / (1000 * 60 * 60 * 24));
+      document.getElementById('diasSinComprar').textContent = dias;
+    }
+  }
+
+  // Mostrar la página de historial
+  function mostrarHistorial() {
+    document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
+    document.getElementById('historial').classList.remove('hidden');
+    renderHistorial();
+    
+    // Configurar eventos de las pestañas
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.onclick = function() {
+        const targetTab = this.getAttribute('data-tab');
+        cambiarTab(targetTab);
+      };
+    });
+  }
+
+  // Cambiar entre pestañas del historial
+  function cambiarTab(tab) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    
+    document.querySelector(`.tab[data-tab="${tab}"]`).classList.add('active');
+    document.getElementById('tab-' + tab).classList.add('active');
+  }
+
+  // Renderizar el historial con los datos actuales
+  function renderHistorial() {
+    // Renderizar compras evitadas
+    const listaEvitadas = document.getElementById('lista-evitadas');
+    if (data.evitadas.length === 0) {
+      listaEvitadas.innerHTML = '<div class="no-entries">No hay compras evitadas registradas</div>';
+    } else {
+      listaEvitadas.innerHTML = data.evitadas
+        .sort((a, b) => new Date(b.fecha) - new Date(a.fecha))
+        .map(item => {
+          const fecha = new Date(item.fecha).toLocaleDateString('es-ES', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+          
+          return `
+            <div class="history-item">
+              <div class="history-header">
+                <span>${item.categoria}</span>
+                <span>${fecha}</span>
+              </div>
+              <div class="history-object">${item.objeto}</div>
+              <div class="history-details">
+                Motivo: ${item.motivo} | Emoción: ${item.emocion}
+                ${item.notas ? `<br>📝 ${item.notas}` : ''}
+              </div>
+              <div class="history-actions">
+                <button class="edit" onclick="editarItem(${item.id}, 'evitada')">✏️ Editar</button>
+                <button class="delete" onclick="mostrarModalEliminar(${item.id}, 'evitada')">🗑️ Eliminar</button>
+              </div>
+            </div>
+          `;
+        }).join('');
+    }
+    
+    // Renderizar compras realizadas
+    const listaCompras = document.getElementById('lista-compras');
+    if (data.compras.length === 0) {
+      listaCompras.innerHTML = '<div class="no-entries">No hay compras realizadas registradas</div>';
+    } else {
+      listaCompras.innerHTML = data.compras
+        .sort((a, b) => new Date(b.fecha) - new Date(a.fecha))
+        .map(item => {
+          const fecha = new Date(item.fecha).toLocaleDateString('es-ES', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+          const precioFormateado = parseFloat(item.precio).toLocaleString('es-ES', { 
+            style: 'currency', 
+            currency: 'EUR',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          });
+          
+          return `
+            <div class="history-item compra">
+              <div class="history-header">
+                <span>${item.categoria} - ${precioFormateado}</span>
+                <span>${fecha}</span>
+              </div>
+              <div class="history-object">${item.objeto}</div>
+              <div class="history-details">
+                Necesario: ${item.necesario}
+                ${item.notas ? `<br>📝 ${item.notas}` : ''}
+              </div>
+              <div class="history-actions">
+                <button class="edit" onclick="editarItem(${item.id}, 'compra')">✏️ Editar</button>
+                <button class="delete" onclick="mostrarModalEliminar(${item.id}, 'compra')">🗑️ Eliminar</button>
+              </div>
+            </div>
+          `;
+        }).join('');
+    }
+    
+    // Renderizar objetos fuera
+    const listaFuera = document.getElementById('lista-fuera');
+    if (data.fuera.length === 0) {
+      listaFuera.innerHTML = '<div class="no-entries">No hay objetos fuera registrados</div>';
+    } else {
+      listaFuera.innerHTML = data.fuera
+        .sort((a, b) => new Date(b.fecha) - new Date(a.fecha))
+        .map(item => {
+          const fecha = new Date(item.fecha).toLocaleDateString('es-ES', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+          
+          return `
+            <div class="history-item fuera">
+              <div class="history-header">
+                <span>${item.categoria} (${item.tipo})</span>
+                <span>${fecha}</span>
+              </div>
+              <div class="history-object">${item.objeto}</div>
+              ${item.notas ? `<div class="history-details">📝 ${item.notas}</div>` : ''}
+              <div class="history-actions">
+                <button class="edit" onclick="editarItem(${item.id}, 'fuera')">✏️ Editar</button>
+                <button class="delete" onclick="mostrarModalEliminar(${item.id}, 'fuera')">🗑️ Eliminar</button>
+              </div>
+            </div>
+          `;
+        }).join('');
+    }
+    
+    // Renderizar compras pospuestas
+    const listaPostpone = document.getElementById('lista-postpone');
+    if (data.postpone.length === 0) {
+      listaPostpone.innerHTML = '<div class="no-entries">No hay compras pospuestas registradas</div>';
+    } else {
+      listaPostpone.innerHTML = data.postpone
+        .sort((a, b) => new Date(b.fechaCreacion) - new Date(a.fechaCreacion))
+        .map(item => {
+          const fecha = new Date(item.fechaCreacion).toLocaleDateString('es-ES', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+          
+          return `
+            <div class="history-item postpone">
+              <div class="history-header">
+                <span>${item.categoria}</span>
+                <span>${fecha}</span>
+              </div>
+              <div class="history-object">${item.objeto}</div>
+              <div class="history-details">
+                Motivo: ${item.motivo} | Emoción: ${item.emocion}
+                ${item.notas ? `<br>📝 ${item.notas}` : ''}
+              </div>
+              <div class="history-actions">
+                <button class="convert" onclick="mostrarModalConvertir(${item.id})">🔄 Convertir</button>
+                <button class="edit" onclick="editarItem(${item.id}, 'postpone')">✏️ Editar</button>
+                <button class="delete" onclick="mostrarModalEliminar(${item.id}, 'postpone')">🗑️ Eliminar</button>
+              </div>
+            </div>
+          `;
+        }).join('');
+    }
+  }
+
+  // Mostrar modal de confirmación para eliminar
+  function mostrarModalEliminar(id, tipo) {
+    itemParaEliminar = id;
+    tipoItemEliminar = tipo;
+    
+    let nombreItem = '';
+    let tipoTexto = '';
+    if (tipo === 'evitada') {
+      const item = data.evitadas.find(e => e.id === id);
+      nombreItem = item ? item.objeto : '';
+      tipoTexto = 'compra evitada';
+    } else if (tipo === 'compra') {
+      const item = data.compras.find(c => c.id === id);
+      nombreItem = item ? item.objeto : '';
+      tipoTexto = 'compra realizada';
+    } else if (tipo === 'fuera') {
+      const item = data.fuera.find(f => f.id === id);
+      nombreItem = item ? item.objeto : '';
+      tipoTexto = 'objeto fuera';
+    } else if (tipo === 'postpone') {
+      const item = data.postpone.find(p => p.id === id);
+      nombreItem = item ? item.objeto : '';
+      tipoTexto = 'compra pospuesta';
+    }
+    
+    document.getElementById('mensajeEliminar').innerHTML = 
+      `¿Estás seguro de que quieres eliminar esta <strong>${tipoTexto}</strong> "<strong>${nombreItem}</strong>"? Esta acción no se puede deshacer.`;
+    
+    document.getElementById('modalEliminar').classList.remove('hidden');
+    
+    // Permitir cerrar modal haciendo clic fuera del contenido
+    document.getElementById('modalEliminar').onclick = function(event) {
+      if (event.target === this) {
+        cerrarModal();
+      }
+    };
+  }
+
+  // Cerrar modal
+  function cerrarModal() {
+    document.getElementById('modalEliminar').classList.add('hidden');
+    itemParaEliminar = null;
+    tipoItemEliminar = null;
+  }
+
+  // Confirmar eliminación
+  function confirmarEliminar() {
+    if (tipoItemEliminar === 'evitada') {
+      data.evitadas = data.evitadas.filter(e => e.id !== itemParaEliminar);
+    } else if (tipoItemEliminar === 'compra') {
+      data.compras = data.compras.filter(c => c.id !== itemParaEliminar);
+      if (data.compras.length > 0) {
+        const ultima = data.compras.reduce((max, item) => 
+          new Date(item.fecha) > new Date(max.fecha) ? item : max
+        );
+        data.ultimaCompra = ultima.fecha;
+      } else {
+        data.ultimaCompra = null;
+      }
+    } else if (tipoItemEliminar === 'fuera') {
+      data.fuera = data.fuera.filter(f => f.id !== itemParaEliminar);
+      if (data.fuera.length > 0) {
+        const ultima = data.fuera.reduce((max, item) => 
+          new Date(item.fecha) > new Date(max.fecha) ? item : max
+        );
+        data.ultimaFuera = ultima.fecha;
+      } else {
+        data.ultimaFuera = null;
+      }
+    } else if (tipoItemEliminar === 'postpone') {
+      data.postpone = data.postpone.filter(p => p.id !== itemParaEliminar);
+    }
+    
+    cerrarModal();
+    guardar();
+    if (document.getElementById('historial').classList.contains('hidden') === false) {
+      renderHistorial();
+    }
+  }
+
+  // Editar un item
+  function editarItem(id, tipo) {
+    itemParaEditar = id;
+    tipoItemEditar = tipo;
+    
+    if (tipo === 'evitada') {
+      const item = data.evitadas.find(e => e.id === id);
+      if (item) {
+        document.getElementById('evitadaFecha').value = formatearFechaParaInput(item.fecha);
+        document.getElementById('evitadaObjeto').value = item.objeto || '';
+        document.getElementById('evitadaCategoria').value = item.categoria || 'Ropa';
+        document.getElementById('evitadaMotivo').value = item.motivo || 'Capricho';
+        document.getElementById('evitadaEmocion').value = item.emocion || 'Neutro';
+        document.getElementById('evitadaNotas').value = item.notas || '';
+        
+        mostrar('evitada');
+      }
+    } else if (tipo === 'compra') {
+      const item = data.compras.find(c => c.id === id);
+      if (item) {
+        document.getElementById('compraFecha').value = formatearFechaParaInput(item.fecha);
+        document.getElementById('compraObjeto').value = item.objeto || '';
+        document.getElementById('compraCategoria').value = item.categoria || 'Ropa';
+        document.getElementById('compraPrecio').value = item.precio || '';
+        document.getElementById('compraNecesario').value = item.necesario || 'Sí';
+        document.getElementById('compraNotas').value = item.notas || '';
+        
+        mostrar('compra');
+      }
+    } else if (tipo === 'fuera') {
+      const item = data.fuera.find(f => f.id === id);
+      if (item) {
+        document.getElementById('fueraFecha').value = formatearFechaParaInput(item.fecha);
+        document.getElementById('fueraObjeto').value = item.objeto || '';
+        document.getElementById('fueraCategoria').value = item.categoria || 'Ropa';
+        document.getElementById('fueraTipo').value = item.tipo || 'Donar';
+        document.getElementById('fueraNotas').value = item.notas || '';
+        
+        mostrar('fuera');
+      }
+    } else if (tipo === 'postpone') {
+      const item = data.postpone.find(p => p.id === id);
+      if (item) {
+        document.getElementById('postponeObjeto').value = item.objeto || '';
+        document.getElementById('postponeCategoria').value = item.categoria || 'Ropa';
+        document.getElementById('postponeMotivo').value = item.motivo || 'Necesidad real';
+        document.getElementById('postponeEmocion').value = item.emocion || 'Neutro';
+        document.getElementById('postponeNotas').value = item.notas || '';
+        
+        mostrar('postpone');
+      }
+    }
+  }
+
+  // ========== FUNCIONES PARA COMPRAS POSPUESTAS ==========
+
+  // Mostrar modal para convertir compra pospuesta
+  function mostrarModalConvertir(id) {
+    itemParaConvertir = id;
+    const item = data.postpone.find(p => p.id === id);
+    
+    if (item) {
+      document.getElementById('mensajeConvertir').innerHTML = 
+        `¿Qué quieres hacer con "<strong>${item.objeto}</strong>"?`;
+      document.getElementById('modalConvertir').classList.remove('hidden');
+    }
+  }
+
+  // Cerrar modal de conversión
+  function cerrarModalConvertir() {
+    document.getElementById('modalConvertir').classList.add('hidden');
+    itemParaConvertir = null;
+  }
+
+  // Convertir a compra evitada
+  function convertirAEvitada() {
+    if (!itemParaConvertir) return;
+    
+    const item = data.postpone.find(p => p.id === itemParaConvertir);
+    if (item) {
+      // Crear nueva compra evitada con los datos
+      const nuevaEvitada = {
+        id: Date.now(),
+        fecha: new Date(),
+        objeto: item.objeto,
+        categoria: item.categoria,
+        motivo: item.motivo,
+        emocion: item.emocion,
+        notas: item.notas + (item.notas ? '\n' : '') + '[Convertido desde compra pospuesta]'
+      };
+      
+      data.evitadas.push(nuevaEvitada);
+      
+      // Eliminar de compras pospuestas
+      data.postpone = data.postpone.filter(p => p.id !== itemParaConvertir);
+      
+      cerrarModalConvertir();
+      guardar();
+      renderHistorial();
+    }
+  }
+
+  // Convertir a compra realizada
+  function convertirACompra() {
+    if (!itemParaConvertir) return;
+    
+    const item = data.postpone.find(p => p.id === itemParaConvertir);
+    if (item) {
+      // Abrir formulario de compra con los datos pre-rellenados
+      document.getElementById('compraObjeto').value = item.objeto;
+      document.getElementById('compraCategoria').value = item.categoria;
+      document.getElementById('compraNecesario').value = 'Dudoso';
+      document.getElementById('compraNotas').value = item.notas + (item.notas ? '\n' : '') + '[Convertido desde compra pospuesta]';
+      
+      // Eliminar de compras pospuestas
+      data.postpone = data.postpone.filter(p => p.id !== itemParaConvertir);
+      
+      // Guardar temporalmente para que no se pierdan los datos al abrir el formulario
+      localStorage.setItem('minimalismo', JSON.stringify(data));
+      
+      cerrarModalConvertir();
+      
+      // Mostrar formulario de compra
+      document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
+      document.getElementById('form-compra').classList.remove('hidden');
+      
+      // Establecer fecha actual
+      const hoy = new Date();
+      document.getElementById('compraFecha').value = formatearFechaParaInput(hoy);
+    }
+  }
+
+  // ========== FUNCIONES DEL CALENDARIO ==========
+
+  // Mostrar la página del calendario
+  function mostrarCalendario() {
+    document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
+    document.getElementById('calendario').classList.remove('hidden');
+    fechaCalendarioActual = new Date(); // Resetear al mes actual
+    renderizarCalendario();
+  }
+
+  // Cambiar de mes en el calendario
+  function cambiarMes(direccion) {
+    fechaCalendarioActual.setMonth(fechaCalendarioActual.getMonth() + direccion);
+    renderizarCalendario();
+  }
+
+  // Renderizar el calendario para el mes actual
+  function renderizarCalendario() {
+    const year = fechaCalendarioActual.getFullYear();
+    const month = fechaCalendarioActual.getMonth();
+    
+    // Actualizar título del mes
+    const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+    document.getElementById('mesActual').textContent = `${meses[month]} ${year}`;
+    
+    // Limpiar días anteriores (excepto los headers)
+    const grid = document.getElementById('calendarioGrid');
+    while (grid.children.length > 7) {
+      grid.removeChild(grid.lastChild);
+    }
+    
+    // Obtener primer día del mes y número de días
+    const primerDia = new Date(year, month, 1);
+    const ultimoDia = new Date(year, month + 1, 0);
+    const diaSemanaInicio = primerDia.getDay() === 0 ? 6 : primerDia.getDay() - 1; // Lunes = 0
+    const totalDiasMes = ultimoDia.getDate();
+    
+    // Días del mes anterior para rellenar
+    const ultimoDiaMesAnterior = new Date(year, month, 0).getDate();
+    for (let i = 0; i < diaSemanaInicio; i++) {
+      const dia = ultimoDiaMesAnterior - diaSemanaInicio + i + 1;
+      crearDiaCalendario(dia, true);
+    }
+    
+    // Días del mes actual
+    const hoy = new Date();
+    const esMesActual = year === hoy.getFullYear() && month === hoy.getMonth();
+    
+    for (let dia = 1; dia <= totalDiasMes; dia++) {
+      const esHoy = esMesActual && dia === hoy.getDate();
+      crearDiaCalendario(dia, false, year, month, dia, esHoy);
+    }
+    
+    // Días del mes siguiente para rellenar
+    const diasRestantes = 42 - (diaSemanaInicio + totalDiasMes); // 6 filas de 7 días
+    for (let i = 1; i <= diasRestantes; i++) {
+      crearDiaCalendario(i, true);
+    }
+  }
+
+  // Crear un día en el calendario
+  function crearDiaCalendario(numero, esOtroMes, year, month, day, esHoy = false) {
+    const grid = document.getElementById('calendarioGrid');
+    const diaElement = document.createElement('div');
+    
+    if (esOtroMes) {
+      diaElement.className = 'calendar-day other-month';
+      diaElement.innerHTML = `<div class="calendar-day-number">${numero}</div>`;
+    } else {
+      // Contar actividades para este día
+      const fechaBusqueda = new Date(year, month, day);
+      fechaBusqueda.setHours(0, 0, 0, 0);
+      
+      const comprasDia = data.compras.filter(c => {
+        const fechaItem = new Date(c.fecha);
+        fechaItem.setHours(0, 0, 0, 0);
+        return fechaItem.getTime() === fechaBusqueda.getTime();
+      }).length;
+      
+      const evitadasDia = data.evitadas.filter(e => {
+        const fechaItem = new Date(e.fecha);
+        fechaItem.setHours(0, 0, 0, 0);
+        return fechaItem.getTime() === fechaBusqueda.getTime();
+      }).length;
+      
+      const fueraDia = data.fuera.filter(f => {
+        const fechaItem = new Date(f.fecha);
+        fechaItem.setHours(0, 0, 0, 0);
+        return fechaItem.getTime() === fechaBusqueda.getTime();
+      }).length;
+      
+      // Crear tooltip con información
+      let tooltip = `Día ${numero}\n`;
+      if (comprasDia > 0) tooltip += `🛒 Compras: ${comprasDia}\n`;
+      if (evitadasDia > 0) tooltip += `✋ Evitadas: ${evitadasDia}\n`;
+      if (fueraDia > 0) tooltip += `📦 Donados: ${fueraDia}\n`;
+      tooltip += `⏳ Pospuestas: ${data.postpone.length}`;
+      
+      let clases = 'calendar-day';
+      if (esHoy) clases += ' today';
+      
+      diaElement.className = clases;
+      diaElement.innerHTML = `
+        <div class="calendar-day-number">${numero}</div>
+        ${comprasDia > 0 || evitadasDia > 0 || fueraDia > 0 ? `
+        <div class="day-stats">
+          ${comprasDia > 0 ? `<div class="stat-badge compra" title="Compras">${comprasDia}</div>` : ''}
+          ${evitadasDia > 0 ? `<div class="stat-badge evitada" title="Evitadas">${evitadasDia}</div>` : ''}
+          ${fueraDia > 0 ? `<div class="stat-badge fuera" title="Donados">${fueraDia}</div>` : ''}
+        </div>
+        ` : ''}
+        <div class="day-tooltip">${tooltip.replace(/\n/g, '<br>')}</div>
+      `;
+    }
+    
+    grid.appendChild(diaElement);
+  }
+
+  // Inicializar el dashboard al cargar
+  actualizarDashboard();
+  
+  // Asegurar que los modales estén ocultos al cargar
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('modalEliminar').classList.add('hidden');
+    document.getElementById('modalConvertir').classList.add('hidden');
+  });
+</script>
+
+</body>
+</html>
