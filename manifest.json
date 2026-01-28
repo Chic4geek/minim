@@ -1,18 +1,20 @@
 {
-  "name": "Mi App Personal",
-  "short_name": "MiApp",
-  "start_url": "index.html",
+  "id": "com.minimalista.app.pwa",
+  "name": "Minimalist Tracker",
+  "short_name": "Minim",
+  "description": "Libérate de lo innecesario y recupera el control de tus finanzas. Esta herramienta te ayuda a registrar cada compra impulsiva que logras evitar y cada objeto que donas o vendes, motivándote a llevar una vida más consciente y minimalista. Menos posesiones, más libertad.",
+  "start_url": "https://chic4geek.github.io/minim/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#000000",
+  "theme_color": "#2c3e50",
   "icons": [
     {
-      "src": "icono-192.png",
+      "src": "icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "icono-512.png",
+      "src": "icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
