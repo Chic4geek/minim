@@ -626,32 +626,20 @@ margin: 12px 0;
 border-left: 4px solid #ffc107;
 display: none;
 }
-.nav-buttons-container {
-display: flex;
-gap: 12px;
-flex-wrap: wrap;
-margin-top: 16px;
-justify-content: center;
-}
-
 .nav-buttons-container-pie {
-  display: flex;
-  justify-content: space-around; /* o space-between / center */
-  align-items: center;
-  gap: 12px;
+display: flex;
+justify-content: space-around;
+align-items: center;
+gap: 12px;
 }
-
 .nav-buttons-container-pie button {
-  background: none;
-  border: none;
-  font-size: 24px; /* tamaño del icono */
-  cursor: pointer;
+background: none;
+border: none;
+font-size: 24px;
+cursor: pointer;
 }
-
-
-
-button.history span.icon, 
-button.calendar span.icon, 
+button.history span.icon,
+button.calendar span.icon,
 button.settings span.icon {
 font-size: 28px;
 line-height: 1;
@@ -710,7 +698,7 @@ flex-direction: column;
 .backup-container {
 flex-direction: column;
 }
-.nav-buttons-container {
+.nav-buttons-container-pie {
 flex-direction: column;
 }
 }
@@ -750,21 +738,19 @@ flex-direction: column;
 <button class="accion-postpone" onclick="mostrar('postpone')">⏳ Compra pospuesta</button>
 <button class="accion-fuera" onclick="mostrar('fuera')">📤 Objeto descartado</button>
 <div class="nav-buttons-container-pie">
-  <button class="history" onclick="mostrarHistorial()" aria-label="Historial">
-    <span class="icon">🗂️</span>
-  </button>
-
-  <button class="calendar" onclick="mostrarCalendario()" aria-label="Calendario">
-    <span class="icon">📅</span>
-  </button>
-
-  <button class="settings" onclick="mostrarSettings()" aria-label="Ajustes">
-    <span class="icon">⚙️</span>
-  </button>
+<button class="history" onclick="mostrarHistorial()" aria-label="Historial">
+<span class="icon">🗂️</span>
+</button>
+<button class="calendar" onclick="mostrarCalendario()" aria-label="Calendario">
+<span class="icon">📅</span>
+</button>
+<button class="settings" onclick="mostrarSettings()" aria-label="Ajustes">
+<span class="icon">⚙️</span>
+</button>
+</div>
 </div>
 
-</div>
-<!-- Formulario de compra pospuesta -->
+<!-- Formulario de compra pospuesta - MODIFICADO -->
 <div class="card hidden" id="form-postpone">
 <h2>⏳ Compra pospuesta</h2>
 <div class="form-group">
@@ -772,22 +758,8 @@ flex-direction: column;
 <input id="postponeObjeto" type="text" placeholder="ej: jersey de lana, libro de cocina...">
 </div>
 <div class="form-group">
-<label class="form-label" for="postponeCategoria">Categoría:</label>
-<select id="postponeCategoria">
-<option>Ropa</option><option>Libros</option><option>Decoración</option><option>Tech</option><option>Hogar</option><option>Alimentación</option><option>Belleza</option><option>Deporte</option>
-</select>
-</div>
-<div class="form-group">
-<label class="form-label" for="postponeMotivo">Motivo de la compra:</label>
-<select id="postponeMotivo">
-<option>Necesidad real</option><option>Capricho</option><option>Oferta</option><option>Lo necesitaré</option><option>Aburrimiento</option><option>Impulso</option><option>Presión social</option>
-</select>
-</div>
-<div class="form-group">
-<label class="form-label" for="postponeEmocion">Emoción actual:</label>
-<select id="postponeEmocion">
-<option>Neutro</option><option>Ansiedad</option><option>Ilusión</option><option>Estrés</option><option>Felicidad</option><option>Tristeza</option><option>Impaciencia</option><option>Excitación</option>
-</select>
+<label class="form-label" for="postponePrecio">Precio aproximado:</label>
+<input id="postponePrecio" type="number" placeholder="0.00" min="0" step="0.01">
 </div>
 <div class="form-group">
 <label class="form-label" for="postponeNotas">Notas adicionales:</label>
@@ -796,6 +768,8 @@ flex-direction: column;
 <button class="accion-postpone" onclick="guardarPostpone()">Guardar compra pospuesta</button>
 <button class="secondary" onclick="volver()">Cancelar</button>
 </div>
+
+<!-- Formulario de compra evitada - MODIFICADO -->
 <div class="card hidden" id="form-evitada">
 <h2>Compra evitada</h2>
 <div class="form-group">
@@ -807,22 +781,8 @@ flex-direction: column;
 <input id="evitadaObjeto" type="text" placeholder="ej: jersey de lana, libro de cocina...">
 </div>
 <div class="form-group">
-<label class="form-label" for="evitadaCategoria">Categoría:</label>
-<select id="evitadaCategoria">
-<option>Ropa</option><option>Libros</option><option>Decoración</option><option>Tech</option><option>Hogar</option><option>Alimentación</option><option>Belleza</option><option>Deporte</option>
-</select>
-</div>
-<div class="form-group">
-<label class="form-label" for="evitadaMotivo">Motivo:</label>
-<select id="evitadaMotivo">
-<option>Oferta</option><option>Capricho</option><option>Lo necesitaré</option><option>Aburrimiento</option><option>Impulso</option><option>Presión social</option><option>Ansiedad</option>
-</select>
-</div>
-<div class="form-group">
-<label class="form-label" for="evitadaEmocion">Emoción:</label>
-<select id="evitadaEmocion">
-<option>Neutro</option><option>Ansiedad</option><option>Ilusión</option><option>Estrés</option><option>Felicidad</option><option>Tristeza</option><option>Culpa</option><option>Satisfacción</option>
-</select>
+<label class="form-label" for="evitadaPrecio">Precio aproximado:</label>
+<input id="evitadaPrecio" type="number" placeholder="0.00" min="0" step="0.01">
 </div>
 <div class="form-group">
 <label class="form-label" for="evitadaNotas">Notas adicionales:</label>
@@ -831,6 +791,8 @@ flex-direction: column;
 <button class="accion-evitada" onclick="guardarEvitada()">Guardar</button>
 <button class="secondary" onclick="volver()">Cancelar</button>
 </div>
+
+<!-- Formulario de compra realizada - MODIFICADO -->
 <div class="card hidden" id="form-compra">
 <h2>Compra realizada</h2>
 <div class="form-group">
@@ -842,20 +804,8 @@ flex-direction: column;
 <input id="compraObjeto" type="text" placeholder="ej: zapatillas deportivas, café...">
 </div>
 <div class="form-group">
-<label class="form-label" for="compraCategoria">Categoría:</label>
-<select id="compraCategoria">
-<option>Ropa</option><option>Libros</option><option>Decoración</option><option>Tech</option><option>Hogar</option><option>Alimentación</option><option>Belleza</option><option>Deporte</option>
-</select>
-</div>
-<div class="form-group">
-<label class="form-label" for="compraPrecio">Precio aproximado:</label>
+<label class="form-label" for="compraPrecio">Precio:</label>
 <input id="compraPrecio" type="number" placeholder="0.00" min="0" step="0.01">
-</div>
-<div class="form-group">
-<label class="form-label" for="compraNecesario">¿Era necesario?</label>
-<select id="compraNecesario">
-<option>Sí</option><option>Dudoso</option><option>No</option>
-</select>
 </div>
 <div class="form-group">
 <label class="form-label" for="compraNotas">Notas adicionales:</label>
@@ -864,6 +814,8 @@ flex-direction: column;
 <button class="accion-compra" onclick="guardarCompra()">Guardar</button>
 <button class="secondary" onclick="volver()">Cancelar</button>
 </div>
+
+<!-- Formulario de objeto descartado - MODIFICADO -->
 <div class="card hidden" id="form-fuera">
 <h2>Objeto descartado</h2>
 <div class="form-group">
@@ -875,10 +827,8 @@ flex-direction: column;
 <input id="fueraObjeto" type="text" placeholder="ej: camiseta vieja, libro...">
 </div>
 <div class="form-group">
-<label class="form-label" for="fueraCategoria">Categoría:</label>
-<select id="fueraCategoria">
-<option>Ropa</option><option>Libros</option><option>Decoración</option><option>Otros</option><option>Tech</option><option>Hogar</option><option>Juguetes</option>
-</select>
+<label class="form-label" for="fueraPrecio">Precio aproximado (cuando lo compraste):</label>
+<input id="fueraPrecio" type="number" placeholder="0.00" min="0" step="0.01">
 </div>
 <div class="form-group">
 <label class="form-label" for="fueraTipo">Tipo de descarte:</label>
@@ -893,6 +843,7 @@ flex-direction: column;
 <button class="accion-fuera" onclick="guardarFuera()">Guardar</button>
 <button class="secondary" onclick="volver()">Cancelar</button>
 </div>
+
 <div class="card hidden" id="historial">
 <h2>🗂️ Historial de actividades</h2>
 <div class="tab-container">
@@ -931,6 +882,7 @@ flex-direction: column;
 </div>
 <button class="secondary" onclick="volver()">Volver al inicio</button>
 </div>
+
 <!-- Nueva página del calendario -->
 <div class="card hidden" id="calendario">
 <h2>📅 Calendario de Actividades</h2>
@@ -975,6 +927,7 @@ flex-direction: column;
 </div>
 <button class="secondary" onclick="volver()">Volver al inicio</button>
 </div>
+
 <!-- Nueva página de Settings -->
 <div class="card hidden" id="settings">
 <h2>⚙️ Configuración</h2>
@@ -1010,6 +963,7 @@ Elimina permanentemente todos tus registros. Esta acción no se puede deshacer.
 </div>
 <button class="secondary" onclick="volver()">Volver al inicio</button>
 </div>
+
 <!-- Modal para convertir compra pospuesta -->
 <div id="modalConvertir" class="modal-overlay hidden">
 <div class="modal">
@@ -1030,6 +984,7 @@ Elimina permanentemente todos tus registros. Esta acción no se puede deshacer.
 </div>
 </div>
 </div>
+
 <!-- Modal de confirmación para eliminar - OCULTO POR DEFECTO -->
 <div id="modalEliminar" class="modal-overlay hidden">
 <div class="modal" id="modalContent">
@@ -1041,6 +996,7 @@ Elimina permanentemente todos tus registros. Esta acción no se puede deshacer.
 </div>
 </div>
 </div>
+
 <!-- Modal de confirmación para reset - OCULTO POR DEFECTO -->
 <div id="modalReset" class="modal-overlay hidden">
 <div class="modal">
@@ -1053,6 +1009,7 @@ Esta acción no se puede deshacer y perderás todo tu historial.</p>
 </div>
 </div>
 </div>
+
 <script>
 // Variables globales
 let itemParaEliminar = null;
@@ -1060,16 +1017,18 @@ let tipoItemEliminar = null;
 let itemParaEditar = null;
 let tipoItemEditar = null;
 let itemParaConvertir = null;
-let fechaCalendarioActual = new Date(); // Mes actual del calendario
+let fechaCalendarioActual = new Date();
+
 // Cargar datos del localStorage o inicializar estructura
 const data = JSON.parse(localStorage.getItem('minimalismo')) || {
 evitadas: [],
 compras: [],
 fuera: [],
-postpone: [], // Nueva lista para compras pospuestas
+postpone: [],
 ultimaCompra: null,
 ultimaFuera: null
 };
+
 // Función para formatear fecha a YYYY-MM-DD
 function formatearFechaParaInput(fecha) {
 const d = new Date(fecha);
@@ -1078,31 +1037,31 @@ const month = String(d.getMonth() + 1).padStart(2, '0');
 const day = String(d.getDate()).padStart(2, '0');
 return `${year}-${month}-${day}`;
 }
+
 // Función para encontrar la fecha de la primera acción registrada
 function encontrarPrimeraAccion() {
 let fechas = [];
-// Añadir fechas de todas las acciones
 data.evitadas.forEach(item => fechas.push(new Date(item.fecha)));
 data.compras.forEach(item => fechas.push(new Date(item.fecha)));
 data.fuera.forEach(item => fechas.push(new Date(item.fecha)));
 data.postpone.forEach(item => fechas.push(new Date(item.fechaCreacion)));
-// Si hay fechas, devolver la más antigua
 if (fechas.length > 0) {
 return fechas.reduce((min, fecha) => fecha < min ? fecha : min);
 }
 return null;
 }
+
 // Función para guardar datos en localStorage y actualizar dashboard
 function guardar() {
 localStorage.setItem('minimalismo', JSON.stringify(data));
 actualizarDashboard();
 volver();
 }
+
 // Mostrar un formulario específico
 function mostrar(tipo) {
 document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
 document.getElementById('form-' + tipo).classList.remove('hidden');
-// Establecer fecha actual en los campos de fecha (excepto postpone)
 const hoy = new Date();
 const fechaFormateada = formatearFechaParaInput(hoy);
 if (tipo === 'evitada') {
@@ -1112,64 +1071,59 @@ document.getElementById('compraFecha').value = fechaFormateada;
 } else if (tipo === 'fuera') {
 document.getElementById('fueraFecha').value = fechaFormateada;
 }
-// Limpiar campos del formulario si no estamos editando
 if (!itemParaEditar) {
 limpiarFormulario(tipo);
 }
 }
-// Limpiar campos del formulario
+
+// Limpiar campos del formulario - MODIFICADO
 function limpiarFormulario(tipo) {
 if (tipo === 'evitada') {
 document.getElementById('evitadaObjeto').value = '';
-document.getElementById('evitadaCategoria').value = 'Ropa';
-document.getElementById('evitadaMotivo').value = 'Capricho';
-document.getElementById('evitadaEmocion').value = 'Neutro';
+document.getElementById('evitadaPrecio').value = '';
 document.getElementById('evitadaNotas').value = '';
 } else if (tipo === 'compra') {
 document.getElementById('compraObjeto').value = '';
-document.getElementById('compraCategoria').value = 'Ropa';
 document.getElementById('compraPrecio').value = '';
-document.getElementById('compraNecesario').value = 'Sí';
 document.getElementById('compraNotas').value = '';
 } else if (tipo === 'fuera') {
 document.getElementById('fueraObjeto').value = '';
-document.getElementById('fueraCategoria').value = 'Ropa';
+document.getElementById('fueraPrecio').value = '';
 document.getElementById('fueraTipo').value = 'Donar';
 document.getElementById('fueraNotas').value = '';
 } else if (tipo === 'postpone') {
 document.getElementById('postponeObjeto').value = '';
-document.getElementById('postponeCategoria').value = 'Ropa';
-document.getElementById('postponeMotivo').value = 'Necesidad real';
-document.getElementById('postponeEmocion').value = 'Neutro';
+document.getElementById('postponePrecio').value = '';
 document.getElementById('postponeNotas').value = '';
 }
 }
+
 // Volver al dashboard
 function volver() {
 document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
 document.getElementById('dashboard').classList.remove('hidden');
 actualizarDashboard();
-// Resetear variables de edición
 itemParaEditar = null;
 tipoItemEditar = null;
 itemParaConvertir = null;
 }
+
 // Ir directamente al listado específico desde el dashboard
 function irAListado(tipo) {
 mostrarHistorial();
 cambiarTab(tipo);
 }
+
 // Mostrar página de settings
 function mostrarSettings() {
 document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
 document.getElementById('settings').classList.remove('hidden');
-// Ocultar mensajes
 document.getElementById('mensajeExito').style.display = 'none';
 document.getElementById('mensajeError').style.display = 'none';
 document.getElementById('mensajeAdvertencia').style.display = 'none';
 }
+
 // ========== FUNCIONES DE EXPORTACIÓN E IMPORTACIÓN ==========
-// Exportar datos a archivo JSON
 function exportarDatos() {
 const dataToExport = {
 evitadas: data.evitadas,
@@ -1187,10 +1141,9 @@ const linkElement = document.createElement('a');
 linkElement.setAttribute('href', dataUri);
 linkElement.setAttribute('download', exportFileDefaultName);
 linkElement.click();
-// Mostrar mensaje de éxito
 mostrarMensaje('exito', 'Datos exportados correctamente');
 }
-// Importar datos desde archivo JSON
+
 function importarDatos(event) {
 const file = event.target.files[0];
 if (!file) return;
@@ -1198,31 +1151,22 @@ const reader = new FileReader();
 reader.onload = function(e) {
 try {
 const importedData = JSON.parse(e.target.result);
-// Validar que el archivo tiene la estructura correcta
 if (!importedData.evitadas || !importedData.compras || !importedData.fuera || !importedData.postpone) {
 throw new Error('Archivo no válido');
 }
-// Mostrar advertencia antes de importar
 mostrarMensaje('advertencia', 'Importando datos. Esto sobrescribirá tus datos actuales.');
-// Confirmar importación
 if (confirm('⚠️ Esta acción sobrescribirá todos tus datos actuales con los del archivo. ¿Continuar?')) {
-// Copiar datos importados
 data.evitadas = importedData.evitadas || [];
 data.compras = importedData.compras || [];
 data.fuera = importedData.fuera || [];
 data.postpone = importedData.postpone || [];
 data.ultimaCompra = importedData.ultimaCompra || null;
 data.ultimaFuera = importedData.ultimaFuera || null;
-// Guardar en localStorage
 localStorage.setItem('minimalismo', JSON.stringify(data));
-// Actualizar interfaz
 actualizarDashboard();
-// Mostrar mensaje de éxito
 mostrarMensaje('exito', 'Datos importados correctamente');
-// Limpiar el input de archivo
 document.getElementById('fileInput').value = '';
 } else {
-// Limpiar el input de archivo
 document.getElementById('fileInput').value = '';
 mostrarMensaje('advertencia', 'Importación cancelada');
 }
@@ -1234,13 +1178,11 @@ document.getElementById('fileInput').value = '';
 };
 reader.readAsText(file);
 }
-// Mostrar mensaje en la página de settings
+
 function mostrarMensaje(tipo, mensaje) {
-// Ocultar todos los mensajes primero
 document.getElementById('mensajeExito').style.display = 'none';
 document.getElementById('mensajeError').style.display = 'none';
 document.getElementById('mensajeAdvertencia').style.display = 'none';
-// Mostrar el mensaje correspondiente
 if (tipo === 'exito') {
 document.getElementById('mensajeExito').style.display = 'block';
 } else if (tipo === 'error') {
@@ -1248,7 +1190,6 @@ document.getElementById('mensajeError').style.display = 'block';
 } else if (tipo === 'advertencia') {
 document.getElementById('mensajeAdvertencia').style.display = 'block';
 }
-// Ocultar automáticamente después de 5 segundos (excepto advertencia)
 if (tipo !== 'advertencia') {
 setTimeout(() => {
 document.getElementById('mensajeExito').style.display = 'none';
@@ -1257,37 +1198,33 @@ document.getElementById('mensajeAdvertencia').style.display = 'none';
 }, 5000);
 }
 }
+
 // ========== FUNCIONES DE RESET ==========
-// Mostrar modal de reset
 function mostrarModalReset() {
 document.getElementById('modalReset').classList.remove('hidden');
 }
-// Cerrar modal de reset
+
 function cerrarModalReset() {
 document.getElementById('modalReset').classList.add('hidden');
 }
-// Resetear todos los datos
+
 function resetearDatos() {
 if (confirm('⚠️ ¿Estás absolutamente seguro? Esta acción borrará TODO tu historial y no se puede deshacer.')) {
-// Resetear datos
 data.evitadas = [];
 data.compras = [];
 data.fuera = [];
 data.postpone = [];
 data.ultimaCompra = null;
 data.ultimaFuera = null;
-// Guardar en localStorage
 localStorage.setItem('minimalismo', JSON.stringify(data));
-// Actualizar interfaz
 actualizarDashboard();
-// Cerrar modal
 cerrarModalReset();
-// Volver al dashboard
 volver();
 alert('✅ Todos los datos han sido borrados correctamente.');
 }
 }
-// Guardar una compra pospuesta
+
+// Guardar una compra pospuesta - MODIFICADO
 function guardarPostpone() {
 const objeto = document.getElementById('postponeObjeto').value.trim();
 if (!objeto) {
@@ -1298,15 +1235,14 @@ const nuevaPostpone = {
 id: Date.now(),
 fechaCreacion: new Date(),
 objeto: objeto,
-categoria: document.getElementById('postponeCategoria').value,
-motivo: document.getElementById('postponeMotivo').value,
-emocion: document.getElementById('postponeEmocion').value,
+precio: document.getElementById('postponePrecio').value || '0',
 notas: document.getElementById('postponeNotas').value.trim()
 };
 data.postpone.push(nuevaPostpone);
 guardar();
 }
-// Guardar una compra evitada con todos sus detalles
+
+// Guardar una compra evitada - MODIFICADO
 function guardarEvitada() {
 const objeto = document.getElementById('evitadaObjeto').value.trim();
 if (!objeto) {
@@ -1318,18 +1254,15 @@ if (!fechaInput) {
 alert('Por favor, selecciona una fecha');
 return;
 }
-const fecha = new Date(fechaInput + 'T12:00:00'); // Usar mediodía para evitar problemas de zona horaria
+const fecha = new Date(fechaInput + 'T12:00:00');
 if (itemParaEditar !== null && tipoItemEditar === 'evitada') {
-// Modo edición
 const index = data.evitadas.findIndex(e => e.id === itemParaEditar);
 if (index !== -1) {
 data.evitadas[index] = {
 id: itemParaEditar,
 fecha: fecha,
 objeto: objeto,
-categoria: document.getElementById('evitadaCategoria').value,
-motivo: document.getElementById('evitadaMotivo').value,
-emocion: document.getElementById('evitadaEmocion').value,
+precio: document.getElementById('evitadaPrecio').value || '0',
 notas: document.getElementById('evitadaNotas').value.trim()
 };
 itemParaEditar = null;
@@ -1338,20 +1271,18 @@ guardar();
 return;
 }
 }
-// Modo creación nueva
 const nuevaEvitada = {
 id: Date.now(),
 fecha: fecha,
 objeto: objeto,
-categoria: document.getElementById('evitadaCategoria').value,
-motivo: document.getElementById('evitadaMotivo').value,
-emocion: document.getElementById('evitadaEmocion').value,
+precio: document.getElementById('evitadaPrecio').value || '0',
 notas: document.getElementById('evitadaNotas').value.trim()
 };
 data.evitadas.push(nuevaEvitada);
 guardar();
 }
-// Guardar una compra realizada con todos sus detalles
+
+// Guardar una compra realizada - MODIFICADO
 function guardarCompra() {
 const objeto = document.getElementById('compraObjeto').value.trim();
 if (!objeto) {
@@ -1363,9 +1294,8 @@ if (!fechaInput) {
 alert('Por favor, selecciona una fecha');
 return;
 }
-const fecha = new Date(fechaInput + 'T12:00:00'); // Usar mediodía para evitar problemas de zona horaria
+const fecha = new Date(fechaInput + 'T12:00:00');
 if (itemParaEditar !== null && tipoItemEditar === 'compra') {
-// Modo edición
 const index = data.compras.findIndex(c => c.id === itemParaEditar);
 if (index !== -1) {
 const fechaOriginal = data.compras[index].fecha;
@@ -1373,12 +1303,9 @@ data.compras[index] = {
 id: itemParaEditar,
 fecha: fecha,
 objeto: objeto,
-categoria: document.getElementById('compraCategoria').value,
 precio: document.getElementById('compraPrecio').value || '0',
-necesario: document.getElementById('compraNecesario').value,
 notas: document.getElementById('compraNotas').value.trim()
 };
-// Si es la compra más reciente, actualizar ultimaCompra
 const ultima = data.compras.reduce((max, item) =>
 new Date(item.fecha) > new Date(max.fecha) ? item : max
 );
@@ -1389,24 +1316,21 @@ guardar();
 return;
 }
 }
-// Modo creación nueva
 const nuevaCompra = {
 id: Date.now(),
 fecha: fecha,
 objeto: objeto,
-categoria: document.getElementById('compraCategoria').value,
 precio: document.getElementById('compraPrecio').value || '0',
-necesario: document.getElementById('compraNecesario').value,
 notas: document.getElementById('compraNotas').value.trim()
 };
 data.compras.push(nuevaCompra);
-// Actualizar última compra si esta es más reciente
 if (!data.ultimaCompra || fecha > new Date(data.ultimaCompra)) {
 data.ultimaCompra = fecha;
 }
 guardar();
 }
-// Guardar un objeto fuera con todos sus detalles
+
+// Guardar un objeto fuera - MODIFICADO
 function guardarFuera() {
 const objeto = document.getElementById('fueraObjeto').value.trim();
 if (!objeto) {
@@ -1418,16 +1342,15 @@ if (!fechaInput) {
 alert('Por favor, selecciona una fecha');
 return;
 }
-const fecha = new Date(fechaInput + 'T12:00:00'); // Usar mediodía para evitar problemas de zona horaria
+const fecha = new Date(fechaInput + 'T12:00:00');
 if (itemParaEditar !== null && tipoItemEditar === 'fuera') {
-// Modo edición
 const index = data.fuera.findIndex(f => f.id === itemParaEditar);
 if (index !== -1) {
 data.fuera[index] = {
 id: itemParaEditar,
 fecha: fecha,
 objeto: objeto,
-categoria: document.getElementById('fueraCategoria').value,
+precio: document.getElementById('fueraPrecio').value || '0',
 tipo: document.getElementById('fueraTipo').value,
 notas: document.getElementById('fueraNotas').value.trim()
 };
@@ -1437,22 +1360,21 @@ guardar();
 return;
 }
 }
-// Modo creación nueva
 const nuevoFuera = {
 id: Date.now(),
 fecha: fecha,
 objeto: objeto,
-categoria: document.getElementById('fueraCategoria').value,
+precio: document.getElementById('fueraPrecio').value || '0',
 tipo: document.getElementById('fueraTipo').value,
 notas: document.getElementById('fueraNotas').value.trim()
 };
 data.fuera.push(nuevoFuera);
-// Actualizar última donación si esta es más reciente
 if (!data.ultimaFuera || fecha > new Date(data.ultimaFuera)) {
 data.ultimaFuera = fecha;
 }
 guardar();
 }
+
 // Calcular los días seguidos donando objetos
 function calcularDiasDonando() {
 if (!data.ultimaFuera) {
@@ -1466,24 +1388,24 @@ const diffTime = hoy - ultimaFecha;
 const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
 return diffDays <= 1 ? (diffDays === 0 ? 1 : diffDays + 1) : 0;
 }
+
 // Actualizar los números del dashboard
 function actualizarDashboard() {
 document.getElementById('totalEvitadas').textContent = data.evitadas.length;
 document.getElementById('totalCompras').textContent = data.compras.length;
 document.getElementById('totalFuera').textContent = data.fuera.length;
 document.getElementById('totalPostpone').textContent = data.postpone.length;
-// Calcular días donando
+
 const diasDonando = calcularDiasDonando();
 const diasDonandoElement = document.getElementById('diasDonando');
 diasDonandoElement.textContent = diasDonando;
 if (diasDonando > 0) {
 diasDonandoElement.innerHTML = '🔥 ' + diasDonando;
 }
-// Calcular días sin comprar
+
 const hoy = new Date();
 hoy.setHours(0, 0, 0, 0);
 if (!data.ultimaCompra) {
-// Si no hay compras realizadas, contar desde la primera acción
 const primeraAccion = encontrarPrimeraAccion();
 if (primeraAccion) {
 primeraAccion.setHours(0, 0, 0, 0);
@@ -1498,7 +1420,6 @@ diasSinComprarElement.innerHTML = '🔥 ' + diasSinComprar;
 document.getElementById('diasSinComprar').textContent = 0;
 }
 } else {
-// Si hay compras, contar desde la última compra
 const ultimaCompra = new Date(data.ultimaCompra);
 ultimaCompra.setHours(0, 0, 0, 0);
 const dias = Math.floor((hoy - ultimaCompra) / (1000 * 60 * 60 * 24));
@@ -1510,12 +1431,12 @@ diasSinComprarElement.innerHTML = '🔥 ' + diasSinComprar;
 }
 }
 }
+
 // Mostrar la página de historial
 function mostrarHistorial() {
 document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
 document.getElementById('historial').classList.remove('hidden');
 renderHistorial();
-// Configurar eventos de las pestañas
 document.querySelectorAll('.tab').forEach(tab => {
 tab.onclick = function() {
 const targetTab = this.getAttribute('data-tab');
@@ -1523,6 +1444,7 @@ cambiarTab(targetTab);
 };
 });
 }
+
 // Cambiar entre pestañas del historial
 function cambiarTab(tab) {
 document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -1530,7 +1452,8 @@ document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('activ
 document.querySelector(`.tab[data-tab="${tab}"]`).classList.add('active');
 document.getElementById('tab-' + tab).classList.add('active');
 }
-// Renderizar el historial con los datos actuales
+
+// Renderizar el historial con los datos actuales - MODIFICADO
 function renderHistorial() {
 // Renderizar compras evitadas
 const listaEvitadas = document.getElementById('lista-evitadas');
@@ -1543,21 +1466,22 @@ listaEvitadas.innerHTML = data.evitadas
 const fecha = new Date(item.fecha).toLocaleDateString('es-ES', {
 day: '2-digit',
 month: 'short',
-year: 'numeric',
-hour: '2-digit',
-minute: '2-digit'
+year: 'numeric'
+});
+const precioFormateado = parseFloat(item.precio).toLocaleString('es-ES', {
+style: 'currency',
+currency: 'EUR',
+minimumFractionDigits: 2,
+maximumFractionDigits: 2
 });
 return `
 <div class="history-item">
 <div class="history-header">
-<span>${item.categoria}</span>
+<span>${precioFormateado}</span>
 <span>${fecha}</span>
 </div>
 <div class="history-object">${item.objeto}</div>
-<div class="history-details">
-Motivo: ${item.motivo} | Emoción: ${item.emocion}
-${item.notas ? `<br>📝 ${item.notas}` : ''}
-</div>
+${item.notas ? `<div class="history-details">📝 ${item.notas}</div>` : ''}
 <div class="history-actions">
 <button class="edit" onclick="editarItem(${item.id}, 'evitada')">✏️ Editar</button>
 <button class="delete" onclick="mostrarModalEliminar(${item.id}, 'evitada')">🗑️ Eliminar</button>
@@ -1566,6 +1490,7 @@ ${item.notas ? `<br>📝 ${item.notas}` : ''}
 `;
 }).join('');
 }
+
 // Renderizar compras realizadas
 const listaCompras = document.getElementById('lista-compras');
 if (data.compras.length === 0) {
@@ -1577,9 +1502,7 @@ listaCompras.innerHTML = data.compras
 const fecha = new Date(item.fecha).toLocaleDateString('es-ES', {
 day: '2-digit',
 month: 'short',
-year: 'numeric',
-hour: '2-digit',
-minute: '2-digit'
+year: 'numeric'
 });
 const precioFormateado = parseFloat(item.precio).toLocaleString('es-ES', {
 style: 'currency',
@@ -1590,14 +1513,11 @@ maximumFractionDigits: 2
 return `
 <div class="history-item compra">
 <div class="history-header">
-<span>${item.categoria} - ${precioFormateado}</span>
+<span>${precioFormateado}</span>
 <span>${fecha}</span>
 </div>
 <div class="history-object">${item.objeto}</div>
-<div class="history-details">
-Necesario: ${item.necesario}
-${item.notas ? `<br>📝 ${item.notas}` : ''}
-</div>
+${item.notas ? `<div class="history-details">📝 ${item.notas}</div>` : ''}
 <div class="history-actions">
 <button class="edit" onclick="editarItem(${item.id}, 'compra')">✏️ Editar</button>
 <button class="delete" onclick="mostrarModalEliminar(${item.id}, 'compra')">🗑️ Eliminar</button>
@@ -1606,6 +1526,7 @@ ${item.notas ? `<br>📝 ${item.notas}` : ''}
 `;
 }).join('');
 }
+
 // Renderizar objetos fuera
 const listaFuera = document.getElementById('lista-fuera');
 if (data.fuera.length === 0) {
@@ -1617,14 +1538,18 @@ listaFuera.innerHTML = data.fuera
 const fecha = new Date(item.fecha).toLocaleDateString('es-ES', {
 day: '2-digit',
 month: 'short',
-year: 'numeric',
-hour: '2-digit',
-minute: '2-digit'
+year: 'numeric'
+});
+const precioFormateado = parseFloat(item.precio).toLocaleString('es-ES', {
+style: 'currency',
+currency: 'EUR',
+minimumFractionDigits: 2,
+maximumFractionDigits: 2
 });
 return `
 <div class="history-item fuera">
 <div class="history-header">
-<span>${item.categoria} (${item.tipo})</span>
+<span>${item.tipo} - ${precioFormateado}</span>
 <span>${fecha}</span>
 </div>
 <div class="history-object">${item.objeto}</div>
@@ -1637,6 +1562,7 @@ ${item.notas ? `<div class="history-details">📝 ${item.notas}</div>` : ''}
 `;
 }).join('');
 }
+
 // Renderizar compras pospuestas
 const listaPostpone = document.getElementById('lista-postpone');
 if (data.postpone.length === 0) {
@@ -1652,17 +1578,20 @@ year: 'numeric',
 hour: '2-digit',
 minute: '2-digit'
 });
+const precioFormateado = parseFloat(item.precio).toLocaleString('es-ES', {
+style: 'currency',
+currency: 'EUR',
+minimumFractionDigits: 2,
+maximumFractionDigits: 2
+});
 return `
 <div class="history-item postpone">
 <div class="history-header">
-<span>${item.categoria}</span>
+<span>${precioFormateado}</span>
 <span>${fecha}</span>
 </div>
 <div class="history-object">${item.objeto}</div>
-<div class="history-details">
-Motivo: ${item.motivo} | Emoción: ${item.emocion}
-${item.notas ? `<br>📝 ${item.notas}` : ''}
-</div>
+${item.notas ? `<div class="history-details">📝 ${item.notas}</div>` : ''}
 <div class="history-actions">
 <button class="convert" onclick="mostrarModalConvertir(${item.id})">🔄 Convertir</button>
 <button class="edit" onclick="editarItem(${item.id}, 'postpone')">✏️ Editar</button>
@@ -1673,6 +1602,7 @@ ${item.notas ? `<br>📝 ${item.notas}` : ''}
 }).join('');
 }
 }
+
 // Mostrar modal de confirmación para eliminar
 function mostrarModalEliminar(id, tipo) {
 itemParaEliminar = id;
@@ -1699,19 +1629,20 @@ tipoTexto = 'compra pospuesta';
 document.getElementById('mensajeEliminar').innerHTML =
 `¿Estás seguro de que quieres eliminar esta <strong>${tipoTexto}</strong> "<strong>${nombreItem}</strong>"? Esta acción no se puede deshacer.`;
 document.getElementById('modalEliminar').classList.remove('hidden');
-// Permitir cerrar modal haciendo clic fuera del contenido
 document.getElementById('modalEliminar').onclick = function(event) {
 if (event.target === this) {
 cerrarModal();
 }
 };
 }
+
 // Cerrar modal
 function cerrarModal() {
 document.getElementById('modalEliminar').classList.add('hidden');
 itemParaEliminar = null;
 tipoItemEliminar = null;
 }
+
 // Confirmar eliminación
 function confirmarEliminar() {
 if (tipoItemEliminar === 'evitada') {
@@ -1741,11 +1672,12 @@ data.postpone = data.postpone.filter(p => p.id !== itemParaEliminar);
 }
 cerrarModal();
 guardar();
-if (document.getElementById('historial').classList.contains('hidden') === false) {
+if (!document.getElementById('historial').classList.contains('hidden')) {
 renderHistorial();
 }
 }
-// Editar un item
+
+// Editar un item - MODIFICADO
 function editarItem(id, tipo) {
 itemParaEditar = id;
 tipoItemEditar = tipo;
@@ -1754,9 +1686,7 @@ const item = data.evitadas.find(e => e.id === id);
 if (item) {
 document.getElementById('evitadaFecha').value = formatearFechaParaInput(item.fecha);
 document.getElementById('evitadaObjeto').value = item.objeto || '';
-document.getElementById('evitadaCategoria').value = item.categoria || 'Ropa';
-document.getElementById('evitadaMotivo').value = item.motivo || 'Capricho';
-document.getElementById('evitadaEmocion').value = item.emocion || 'Neutro';
+document.getElementById('evitadaPrecio').value = item.precio || '';
 document.getElementById('evitadaNotas').value = item.notas || '';
 mostrar('evitada');
 }
@@ -1765,9 +1695,7 @@ const item = data.compras.find(c => c.id === id);
 if (item) {
 document.getElementById('compraFecha').value = formatearFechaParaInput(item.fecha);
 document.getElementById('compraObjeto').value = item.objeto || '';
-document.getElementById('compraCategoria').value = item.categoria || 'Ropa';
 document.getElementById('compraPrecio').value = item.precio || '';
-document.getElementById('compraNecesario').value = item.necesario || 'Sí';
 document.getElementById('compraNotas').value = item.notas || '';
 mostrar('compra');
 }
@@ -1776,7 +1704,7 @@ const item = data.fuera.find(f => f.id === id);
 if (item) {
 document.getElementById('fueraFecha').value = formatearFechaParaInput(item.fecha);
 document.getElementById('fueraObjeto').value = item.objeto || '';
-document.getElementById('fueraCategoria').value = item.categoria || 'Ropa';
+document.getElementById('fueraPrecio').value = item.precio || '';
 document.getElementById('fueraTipo').value = item.tipo || 'Donar';
 document.getElementById('fueraNotas').value = item.notas || '';
 mostrar('fuera');
@@ -1785,16 +1713,14 @@ mostrar('fuera');
 const item = data.postpone.find(p => p.id === id);
 if (item) {
 document.getElementById('postponeObjeto').value = item.objeto || '';
-document.getElementById('postponeCategoria').value = item.categoria || 'Ropa';
-document.getElementById('postponeMotivo').value = item.motivo || 'Necesidad real';
-document.getElementById('postponeEmocion').value = item.emocion || 'Neutro';
+document.getElementById('postponePrecio').value = item.precio || '';
 document.getElementById('postponeNotas').value = item.notas || '';
 mostrar('postpone');
 }
 }
 }
+
 // ========== FUNCIONES PARA COMPRAS POSPUESTAS ==========
-// Mostrar modal para convertir compra pospuesta
 function mostrarModalConvertir(id) {
 itemParaConvertir = id;
 const item = data.postpone.find(p => p.id === id);
@@ -1804,107 +1730,91 @@ document.getElementById('mensajeConvertir').innerHTML =
 document.getElementById('modalConvertir').classList.remove('hidden');
 }
 }
-// Cerrar modal de conversión
+
 function cerrarModalConvertir() {
 document.getElementById('modalConvertir').classList.add('hidden');
 itemParaConvertir = null;
 }
-// Convertir a compra evitada
+
 function convertirAEvitada() {
 if (!itemParaConvertir) return;
 const item = data.postpone.find(p => p.id === itemParaConvertir);
 if (item) {
-// Crear nueva compra evitada con los datos
 const nuevaEvitada = {
 id: Date.now(),
 fecha: new Date(),
 objeto: item.objeto,
-categoria: item.categoria,
-motivo: item.motivo,
-emocion: item.emocion,
+precio: item.precio || '0',
 notas: item.notas + (item.notas ? '\n' : '') + '[Convertido desde compra pospuesta]'
 };
 data.evitadas.push(nuevaEvitada);
-// Eliminar de compras pospuestas
 data.postpone = data.postpone.filter(p => p.id !== itemParaConvertir);
 cerrarModalConvertir();
 guardar();
 renderHistorial();
 }
 }
-// Convertir a compra realizada
+
 function convertirACompra() {
 if (!itemParaConvertir) return;
 const item = data.postpone.find(p => p.id === itemParaConvertir);
 if (item) {
-// Abrir formulario de compra con los datos pre-rellenados
 document.getElementById('compraObjeto').value = item.objeto;
-document.getElementById('compraCategoria').value = item.categoria;
-document.getElementById('compraNecesario').value = 'Dudoso';
+document.getElementById('compraPrecio').value = item.precio || '';
 document.getElementById('compraNotas').value = item.notas + (item.notas ? '\n' : '') + '[Convertido desde compra pospuesta]';
-// Eliminar de compras pospuestas
 data.postpone = data.postpone.filter(p => p.id !== itemParaConvertir);
-// Guardar temporalmente para que no se pierdan los datos al abrir el formulario
 localStorage.setItem('minimalismo', JSON.stringify(data));
 cerrarModalConvertir();
-// Mostrar formulario de compra
 document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
 document.getElementById('form-compra').classList.remove('hidden');
-// Establecer fecha actual
 const hoy = new Date();
 document.getElementById('compraFecha').value = formatearFechaParaInput(hoy);
 }
 }
+
 // ========== FUNCIONES DEL CALENDARIO ==========
-// Mostrar la página del calendario
 function mostrarCalendario() {
 document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
 document.getElementById('calendario').classList.remove('hidden');
-fechaCalendarioActual = new Date(); // Resetear al mes actual
+fechaCalendarioActual = new Date();
 renderizarCalendario();
 }
-// Cambiar de mes en el calendario
+
 function cambiarMes(direccion) {
 fechaCalendarioActual.setMonth(fechaCalendarioActual.getMonth() + direccion);
 renderizarCalendario();
 }
-// Renderizar el calendario para el mes actual
+
 function renderizarCalendario() {
 const year = fechaCalendarioActual.getFullYear();
 const month = fechaCalendarioActual.getMonth();
-// Actualizar título del mes
 const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 document.getElementById('mesActual').textContent = `${meses[month]} ${year}`;
-// Limpiar días anteriores (excepto los headers)
 const grid = document.getElementById('calendarioGrid');
 while (grid.children.length > 7) {
 grid.removeChild(grid.lastChild);
 }
-// Obtener primer día del mes y número de días
 const primerDia = new Date(year, month, 1);
 const ultimoDia = new Date(year, month + 1, 0);
-const diaSemanaInicio = primerDia.getDay() === 0 ? 6 : primerDia.getDay() - 1; // Lunes = 0
+const diaSemanaInicio = primerDia.getDay() === 0 ? 6 : primerDia.getDay() - 1;
 const totalDiasMes = ultimoDia.getDate();
-// Días del mes anterior para rellenar
 const ultimoDiaMesAnterior = new Date(year, month, 0).getDate();
 for (let i = 0; i < diaSemanaInicio; i++) {
 const dia = ultimoDiaMesAnterior - diaSemanaInicio + i + 1;
 crearDiaCalendario(dia, true);
 }
-// Días del mes actual
 const hoy = new Date();
 const esMesActual = year === hoy.getFullYear() && month === hoy.getMonth();
 for (let dia = 1; dia <= totalDiasMes; dia++) {
 const esHoy = esMesActual && dia === hoy.getDate();
 crearDiaCalendario(dia, false, year, month, dia, esHoy);
 }
-// Días del mes siguiente para rellenar
-const diasRestantes = 42 - (diaSemanaInicio + totalDiasMes); // 6 filas de 7 días
+const diasRestantes = 42 - (diaSemanaInicio + totalDiasMes);
 for (let i = 1; i <= diasRestantes; i++) {
 crearDiaCalendario(i, true);
 }
 }
-// Crear un día en el calendario
+
 function crearDiaCalendario(numero, esOtroMes, year, month, day, esHoy = false) {
 const grid = document.getElementById('calendarioGrid');
 const diaElement = document.createElement('div');
@@ -1912,7 +1822,6 @@ if (esOtroMes) {
 diaElement.className = 'calendar-day other-month';
 diaElement.innerHTML = `<div class="calendar-day-number">${numero}</div>`;
 } else {
-// Contar actividades para este día
 const fechaBusqueda = new Date(year, month, day);
 fechaBusqueda.setHours(0, 0, 0, 0);
 const comprasDia = data.compras.filter(c => {
@@ -1930,7 +1839,6 @@ const fechaItem = new Date(f.fecha);
 fechaItem.setHours(0, 0, 0, 0);
 return fechaItem.getTime() === fechaBusqueda.getTime();
 }).length;
-// Crear tooltip con información
 let tooltip = `Día ${numero}\n`;
 if (comprasDia > 0) tooltip += `🛒 Compras: ${comprasDia}\n`;
 if (evitadasDia > 0) tooltip += `✋ Evitadas: ${evitadasDia}\n`;
@@ -1953,8 +1861,10 @@ ${fueraDia > 0 ? `<div class="stat-badge fuera" title="Donados">${fueraDia}</div
 }
 grid.appendChild(diaElement);
 }
+
 // Inicializar el dashboard al cargar
 actualizarDashboard();
+
 // Asegurar que los modales estén ocultos al cargar
 document.addEventListener('DOMContentLoaded', function() {
 document.getElementById('modalEliminar').classList.add('hidden');
@@ -1962,13 +1872,5 @@ document.getElementById('modalConvertir').classList.add('hidden');
 document.getElementById('modalReset').classList.add('hidden');
 });
 </script>
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js')
-      .then(reg => console.log('Registro de SW exitoso', reg))
-      .catch(err => console.warn('Error al registrar SW', err));
-  }
-</script>
 </body>
-
 </html>
