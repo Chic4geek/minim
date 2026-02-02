@@ -648,9 +648,6 @@ line-height: 1;
 .stats-container {
 grid-template-columns: 1fr 1fr;
 }
-.history-actions {
-flex-direction: column;
-}
 .modal-buttons {
 flex-direction: column;
 }
@@ -698,9 +695,7 @@ flex-direction: column;
 .backup-container {
 flex-direction: column;
 }
-.nav-buttons-container-pie {
-flex-direction: column;
-}
+
 }
 </style>
 </head>
@@ -1483,8 +1478,8 @@ return `
 <div class="history-object">${item.objeto}</div>
 ${item.notas ? `<div class="history-details">📝 ${item.notas}</div>` : ''}
 <div class="history-actions">
-<button class="edit" onclick="editarItem(${item.id}, 'evitada')">✏️ Editar</button>
-<button class="delete" onclick="mostrarModalEliminar(${item.id}, 'evitada')">🗑️ Eliminar</button>
+<button class="edit" onclick="editarItem(${item.id}, 'evitada')">✏️</button>
+<button class="delete" onclick="mostrarModalEliminar(${item.id}, 'evitada')">🗑️</button>
 </div>
 </div>
 `;
@@ -1519,8 +1514,8 @@ return `
 <div class="history-object">${item.objeto}</div>
 ${item.notas ? `<div class="history-details">📝 ${item.notas}</div>` : ''}
 <div class="history-actions">
-<button class="edit" onclick="editarItem(${item.id}, 'compra')">✏️ Editar</button>
-<button class="delete" onclick="mostrarModalEliminar(${item.id}, 'compra')">🗑️ Eliminar</button>
+<button class="edit" onclick="editarItem(${item.id}, 'compra')">✏️</button>
+<button class="delete" onclick="mostrarModalEliminar(${item.id}, 'compra')">🗑️</button>
 </div>
 </div>
 `;
@@ -1555,8 +1550,8 @@ return `
 <div class="history-object">${item.objeto}</div>
 ${item.notas ? `<div class="history-details">📝 ${item.notas}</div>` : ''}
 <div class="history-actions">
-<button class="edit" onclick="editarItem(${item.id}, 'fuera')">✏️ Editar</button>
-<button class="delete" onclick="mostrarModalEliminar(${item.id}, 'fuera')">🗑️ Eliminar</button>
+<button class="edit" onclick="editarItem(${item.id}, 'fuera')">✏️</button>
+<button class="delete" onclick="mostrarModalEliminar(${item.id}, 'fuera')">🗑️</button>
 </div>
 </div>
 `;
@@ -1594,8 +1589,8 @@ return `
 ${item.notas ? `<div class="history-details">📝 ${item.notas}</div>` : ''}
 <div class="history-actions">
 <button class="convert" onclick="mostrarModalConvertir(${item.id})">🔄 Convertir</button>
-<button class="edit" onclick="editarItem(${item.id}, 'postpone')">✏️ Editar</button>
-<button class="delete" onclick="mostrarModalEliminar(${item.id}, 'postpone')">🗑️ Eliminar</button>
+<button class="edit" onclick="editarItem(${item.id}, 'postpone')">✏️</button>
+<button class="delete" onclick="mostrarModalEliminar(${item.id}, 'postpone')">🗑️</button>
 </div>
 </div>
 `;
