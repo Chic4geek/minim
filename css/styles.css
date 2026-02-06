@@ -192,6 +192,9 @@ input[type="date"], input[type="file"] {
   position: relative;
   border: 1px solid #f0f0f0;
 }
+.history-item.evitada {
+  border-left-color: #5a6b82;
+}
 .history-item.compra {
   border-left-color: #a54c4c;
 }
@@ -200,7 +203,7 @@ input[type="date"], input[type="file"] {
 }
 .history-item.postpone {
   border-left-color: #a87c4f;
-  background: #fdf9f5;
+  background: #fbfbfb;
 }
 .history-header {
   display: flex;
@@ -355,7 +358,7 @@ input[type="date"], input[type="file"] {
   width: 200px;
 }
 .tab {
-  font-size: 16px; /* Reducido de 36px a tamaño legible */
+  font-size: 24px; /* Reducido de 36px a tamaño legible */
   padding: 12px 16px;
   cursor: pointer;
   border-left: 3px solid transparent;
@@ -729,7 +732,7 @@ button.settings span.icon {
     border-left: none;
     border-right: none;
     border-bottom: 3px solid transparent;
-    font-size: 14px;
+    font-size: 24px;
     padding: 10px;
   }
   .tab.active {
